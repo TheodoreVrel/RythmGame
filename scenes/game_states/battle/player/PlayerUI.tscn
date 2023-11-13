@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://be1421fkkp1x3"]
+
+[ext_resource type="Script" path="res://scenes/game_states/battle/player/PlayerUI.gd" id="1_xll2r"]
+
+[node name="PlayerUI" type="CanvasLayer"]
+script = ExtResource("1_xll2r")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.456
+anchor_top = 0.6
+anchor_right = 0.481
+anchor_bottom = 0.603
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Player Health : 
+"
