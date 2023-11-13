@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://iv6yq3qs4prc"]
+
+[ext_resource type="Shader" path="res://scenes/game_states/battle/rythm_rings/Parent/rythm_point.gdshader" id="1_886af"]
+[ext_resource type="Texture2D" uid="uid://dqgha2o11awu5" path="res://assets/toppng.com-brush-stroke-png-red-circle-brush-stroke-1024x964.png" id="2_odrxt"]
+
+[sub_resource type="Curve2D" id="Curve2D_l1a1p"]
+bake_interval = 0.1
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -740, 0, -740, -50, 740, -50, 0, 300, 0, 0, 740, -50, 740, 0)
+}
+point_count = 3
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mkik1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ri48s"]
+shader = ExtResource("1_886af")
+shader_parameter/color = Color(0.00784314, 0.164706, 1, 1)
+shader_parameter/progress = 0.0
+
+[node name="Path2D" type="Path2D"]
+curve = SubResource("Curve2D_l1a1p")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(-740, 0)
+rotation = 0.385157
+cubic_interp = false
+
+[node name="rythm_point" type="Area2D" parent="PathFollow2D"]
+position = Vector2(6.16169, 7.21349)
+scale = Vector2(20, 20)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/rythm_point"]
+shape = SubResource("CircleShape2D_mkik1")
+metadata/_edit_lock_ = true
+
+[node name="rythm_point_sprite" type="Sprite2D" parent="PathFollow2D/rythm_point"]
+material = SubResource("ShaderMaterial_ri48s")
+rotation = -3.07413
+scale = Vector2(0.025, 0.025)
+texture = ExtResource("2_odrxt")
+metadata/_edit_lock_ = true
+
+[node name="_Timer_158997" type="Timer" parent="PathFollow2D"]
+wait_time = 0.2
+one_shot = true

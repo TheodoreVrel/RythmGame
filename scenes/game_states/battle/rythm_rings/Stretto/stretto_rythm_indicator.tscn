@@ -1,7 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://b6ha404xnof6l"]
+[gd_scene load_steps=4 format=3 uid="uid://b6ha404xnof6l"]
 
 [ext_resource type="Script" path="res://scenes/game_states/battle/rythm_rings/Stretto/stretto_rythm_indicator.gd" id="1_81hpa"]
 [ext_resource type="PackedScene" uid="uid://dtm5pk0ugsp1a" path="res://scenes/game_states/battle/rythm_rings/Parent/rythm_indicator.tscn" id="1_tyls5"]
+[ext_resource type="PackedScene" uid="uid://8i1csj7ta7jp" path="res://scenes/game_states/battle/rythm_rings/Parent/circle_path_2d.tscn" id="3_66cji"]
 
 [node name="stretto_rythm_indicator" instance=ExtResource("1_tyls5")]
 script = ExtResource("1_81hpa")
+targets_enemies = true
+initial_indicator_speed = 1.6
+initial_indicator_speed_multiplier = 0.4
+indicator_speed_post3 = 5.15
+indicator_speed_post3_multiplier = 0.3
+indicator_speed_post6 = 6.3
+indicator_speed_post6_multiplier = 0.2
+initial_health_mod = 3
+health_mod_multiplier = 0.5
+health_mod_post3 = 8
+health_mod_post3_multiplier = 1.5
+health_mod_post6 = 15
+health_mod_post6_multiplier = 3.8
+
+[node name="Path2D" parent="." index="2" instance=ExtResource("3_66cji")]

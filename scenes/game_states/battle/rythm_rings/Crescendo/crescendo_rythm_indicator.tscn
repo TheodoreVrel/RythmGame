@@ -1,7 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://bhqjwjdyfjiuj"]
+[gd_scene load_steps=4 format=3 uid="uid://bhqjwjdyfjiuj"]
 
 [ext_resource type="PackedScene" uid="uid://dtm5pk0ugsp1a" path="res://scenes/game_states/battle/rythm_rings/Parent/rythm_indicator.tscn" id="1_y27qn"]
 [ext_resource type="Script" path="res://scenes/game_states/battle/rythm_rings/Crescendo/crescendo_rythm_indicator.gd" id="2_uitcq"]
+[ext_resource type="PackedScene" uid="uid://8i1csj7ta7jp" path="res://scenes/game_states/battle/rythm_rings/Parent/circle_path_2d.tscn" id="3_xpyo7"]
 
 [node name="CrescendoRythmIndicator" instance=ExtResource("1_y27qn")]
 script = ExtResource("2_uitcq")
+targets_enemies = true
+initial_indicator_speed = 2.9
+initial_indicator_speed_multiplier = 0.25
+indicator_speed_post3 = 3.45
+indicator_speed_post3_multiplier = 0.45
+indicator_speed_post6 = 4.1
+indicator_speed_post6_multiplier = 0.4
+initial_health_mod = 4
+health_mod_multiplier = 1
+health_mod_post3 = 6
+health_mod_post3_multiplier = 1.75
+health_mod_post6 = 9
+health_mod_post6_multiplier = 3.4
+clockwise_change = true
+
+[node name="Path2D" parent="." index="2" instance=ExtResource("3_xpyo7")]

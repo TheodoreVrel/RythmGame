@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dtm5pk0ugsp1a"]
+[gd_scene load_steps=15 format=3 uid="uid://dtm5pk0ugsp1a"]
 
 [ext_resource type="Script" path="res://scenes/game_states/battle/rythm_rings/Parent/rythm_indicator.gd" id="1_uugmu"]
 [ext_resource type="Texture2D" uid="uid://cfc2drsfetmti" path="res://assets/circle-png-circled-thin-icon-1600.png" id="2_pmwj3"]
@@ -12,26 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://cq2cf7dm1nkxe" path="res://assets/pngwing.com(2).png" id="10_2x8jb"]
 [ext_resource type="Texture2D" uid="uid://cfetv3j41p1v0" path="res://assets/colorful-grunge-brush-stroke-circle-1.png" id="11_6h7q5"]
 [ext_resource type="Texture2D" uid="uid://d3it6sv3qw0gh" path="res://assets/watercolor-circle-paint-artistic-4525735.png" id="12_oqisy"]
-[ext_resource type="Shader" path="res://scenes/game_states/battle/rythm_rings/Parent/rythm_point.gdshader" id="13_aew4u"]
-[ext_resource type="Texture2D" uid="uid://dqgha2o11awu5" path="res://assets/toppng.com-brush-stroke-png-red-circle-brush-stroke-1024x964.png" id="14_7s5po"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pcrgl"]
 shader = ExtResource("7_i358j")
 shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/progress = 0.0
-
-[sub_resource type="Curve2D" id="Curve2D_l1a1p"]
-bake_interval = 0.1
-_data = {
-"points": PackedVector2Array(0, 0, -740, 50, 0, -740, 0, 0, 50, 740, -740, 0, 0, 0, 740, -50, 0, 740, 0, 0, -50, -740, 740, 0, 0, 0, 0, 0, 0, -740)
-}
-point_count = 5
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_mkik1"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ri48s"]
-shader = ExtResource("13_aew4u")
-shader_parameter/color = Color(0.00784314, 0.164706, 1, 1)
 shader_parameter/progress = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_phjp3"]
@@ -39,6 +23,7 @@ shader_parameter/progress = 0.0
 [node name="rythm_indicator" type="Node2D"]
 scale = Vector2(0.2, 0.2)
 script = ExtResource("1_uugmu")
+max_rythm_missed = 1
 
 [node name="path_circle" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -53,28 +38,6 @@ scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_pmwj3")
 script = ExtResource("8_bb6h1")
 indic_circles = Array[Texture2D]([ExtResource("9_3b4na"), ExtResource("10_2x8jb"), ExtResource("11_6h7q5"), ExtResource("12_oqisy")])
-
-[node name="Path2D" type="Path2D" parent="."]
-curve = SubResource("Curve2D_l1a1p")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-position = Vector2(0, -740)
-rotation = 3.07413
-cubic_interp = false
-
-[node name="rythm_point" type="Area2D" parent="Path2D/PathFollow2D"]
-position = Vector2(699.176, -364.695)
-scale = Vector2(20, 20)
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/rythm_point"]
-shape = SubResource("CircleShape2D_mkik1")
-
-[node name="rythm_point_sprite" type="Sprite2D" parent="Path2D/PathFollow2D/rythm_point"]
-material = SubResource("ShaderMaterial_ri48s")
-rotation = -3.07413
-scale = Vector2(0.025, 0.025)
-texture = ExtResource("14_7s5po")
 
 [node name="DetectionAreas" type="Node2D" parent="."]
 
@@ -94,19 +57,28 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionAreas/RythmDetectionArea2"]
 shape = SubResource("CircleShape2D_phjp3")
 
-[node name="LostTimerDelay" type="Timer" parent="."]
+[node name="Timers" type="Node" parent="."]
+
+[node name="LostTimerDelay" type="Timer" parent="Timers"]
 one_shot = true
 
-[node name="MissedRythmPenaltyDelay" type="Timer" parent="."]
+[node name="OutRythmPenaltyDelay" type="Timer" parent="Timers"]
 wait_time = 0.15
+one_shot = true
 
-[node name="PointHitEffectTimer" type="Timer" parent="."]
+[node name="PointHitEffectTimer" type="Timer" parent="Timers"]
 wait_time = 0.1
+one_shot = true
+
+[node name="DelayBetweenClicks" type="Timer" parent="Timers"]
+wait_time = 0.3
+one_shot = true
 
 [connection signal="area_entered" from="DetectionAreas/RythmDetectionArea1" to="." method="_on_rythm_detection_area_1_area_entered"]
 [connection signal="area_exited" from="DetectionAreas/RythmDetectionArea1" to="." method="_on_rythm_detection_area_1_area_exited"]
 [connection signal="area_entered" from="DetectionAreas/RythmDetectionArea2" to="." method="_on_rythm_detection_area_2_area_entered"]
 [connection signal="area_exited" from="DetectionAreas/RythmDetectionArea2" to="." method="_on_rythm_detection_area_2_area_exited"]
-[connection signal="timeout" from="LostTimerDelay" to="." method="_on_lost_timer_delay_timeout"]
-[connection signal="timeout" from="MissedRythmPenaltyDelay" to="." method="_on_missed_rythm_penalty_delay_timeout"]
-[connection signal="timeout" from="PointHitEffectTimer" to="." method="_on_point_hit_effect_timer_timeout"]
+[connection signal="timeout" from="Timers/LostTimerDelay" to="." method="_on_lost_timer_delay_timeout"]
+[connection signal="timeout" from="Timers/OutRythmPenaltyDelay" to="." method="_on_out_of_rythm_penalty_delay_timeout"]
+[connection signal="timeout" from="Timers/PointHitEffectTimer" to="." method="_on_point_hit_effect_timer_timeout"]
+[connection signal="timeout" from="Timers/DelayBetweenClicks" to="." method="_on_delay_between_clicks_timeout"]

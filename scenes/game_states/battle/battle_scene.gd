@@ -2,12 +2,16 @@ extends Node2D
 
 var crescendo_rythm_ring_scene : PackedScene = preload("res://scenes/game_states/battle/rythm_rings/Crescendo/crescendo_rythm_indicator.tscn")
 var stretto_rythm_ring_scene : PackedScene = preload("res://scenes/game_states/battle/rythm_rings/Stretto/stretto_rythm_indicator.tscn")
+var tranquillo_rythm_ring_scene : PackedScene = preload("res://scenes/game_states/battle/rythm_rings/Tranquillo/tranquillo.tscn")
+
 var enemy_scene : PackedScene = preload("res://scenes/game_states/battle/enemies/enemy.tscn")
 
 @onready var rythm_rings_container = $RythmRings
 @onready var enemies_container = $Enemies
 
 var enemy_hp : int = 1000
+var player_hp: int = 80
+var player_shield: int = 0
 var combat_started : bool = false
 
 # Called when the node enters the scene tree for the first time.
@@ -30,7 +34,7 @@ func _on_ui_button_pressed(button_number):
 			2:
 				create_rythm_ring(stretto_rythm_ring_scene)
 			3:
-				pass
+				create_rythm_ring(tranquillo_rythm_ring_scene)
 			4:
 				pass
 			_:
@@ -70,15 +74,23 @@ func on_lost_rythm_game():
 	enable_buttons()
 	$UI/ComboUI.visible = false
 
-func on_hp_change(hp_mod: int):
-	enemy_hp -= hp_mod
-	if enemy_hp <= 0:
-		enemy_hp = 0
-		won_fight()
-	$UI/EnemyUI.update_enemy_hp(enemy_hp)
-	$Enemies.get_child(0).get_child(0).material.set_shader_parameter("progress", 0.4)
-	$Timers/EnemyShaderBlinkTimer.start()
-	
+func on_hp_change(hp_mod: int, targets_enemy: bool):
+	if targets_enemy:
+		enemy_hp -= hp_mod
+		if enemy_hp <= 0:
+			enemy_hp = 0
+			won_fight()
+		$UI/EnemyUI.update_enemy_hp(enemy_hp)
+		$Enemies.get_child(0).get_child(0).material.set_shader_parameter("progress", 0.4)
+		$Timers/EnemyShaderBlinkTimer.start()
+	else:
+		player_shield -= hp_mod
+#		if player_hp <= 0:
+#			player_hp = 0
+		if player_shield <= 0:
+			player_shield = 0
+		$UI/PlayerUI.update_player_hp(player_hp, player_shield)
+		print(player_hp, " | ", player_shield)
 
 func on_combo_change(value: int):
 	$UI/ComboUI.update_combo(value)
