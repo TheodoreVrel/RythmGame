@@ -1,0 +1,108 @@
+[gd_scene load_steps=4 format=3 uid="uid://umhio8mb6ddn"]
+
+[ext_resource type="Script" path="res://scenes/game_states/battle/battle_options_panel/BattleOptionsPannel.gd" id="1_1bw6n"]
+[ext_resource type="FontFile" uid="uid://cas5fpt73s43a" path="res://assets/UI/fonts/josefin-sans/JosefinSans-Bold.ttf" id="1_11tn7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qbgjx"]
+font = ExtResource("1_11tn7")
+font_size = 28
+
+[node name="BattleOptionsPanel" type="CanvasLayer"]
+script = ExtResource("1_1bw6n")
+
+[node name="BoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.45
+anchor_top = 0.65
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button1" type="Button" parent="BoxContainer/HBoxContainer"]
+texture_filter = 2
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="BoxContainer/HBoxContainer/Button1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Accelerando"
+label_settings = SubResource("LabelSettings_qbgjx")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="Button2" type="Button" parent="BoxContainer/HBoxContainer"]
+texture_filter = 2
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="BoxContainer/HBoxContainer/Button2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Stretto"
+label_settings = SubResource("LabelSettings_qbgjx")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button3" type="Button" parent="BoxContainer/HBoxContainer2"]
+texture_filter = 2
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="BoxContainer/HBoxContainer2/Button3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Concentration"
+label_settings = SubResource("LabelSettings_qbgjx")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="Button4" type="Button" parent="BoxContainer/HBoxContainer2"]
+texture_filter = 2
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="BoxContainer/HBoxContainer2/Button4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Fuite"
+label_settings = SubResource("LabelSettings_qbgjx")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[connection signal="pressed" from="BoxContainer/HBoxContainer/Button1" to="." method="_on_button_1_pressed"]
+[connection signal="pressed" from="BoxContainer/HBoxContainer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="BoxContainer/HBoxContainer2/Button3" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="BoxContainer/HBoxContainer2/Button4" to="." method="_on_button_4_pressed"]

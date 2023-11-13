@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8gf6u18rr6b2"]
+
+[ext_resource type="Script" path="res://scenes/game_states/battle/ComboUI/ComboUI.gd" id="1_ksxkc"]
+
+[node name="ComboUI" type="CanvasLayer"]
+script = ExtResource("1_ksxkc")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.098
+anchor_top = 0.754
+anchor_right = 0.328
+anchor_bottom = 0.754
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Combo : "

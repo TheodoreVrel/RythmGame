@@ -1,0 +1,117 @@
+[gd_scene load_steps=9 format=3 uid="uid://tiklphej45op"]
+
+[ext_resource type="Script" path="res://scenes/game_states/battle/battle_scene.gd" id="1_2dsg1"]
+[ext_resource type="PackedScene" uid="uid://umhio8mb6ddn" path="res://scenes/game_states/battle/battle_options_panel/BattleOptionsPannel.tscn" id="2_30f2y"]
+[ext_resource type="PackedScene" uid="uid://bi2b88tiynvfi" path="res://scenes/game_states/battle/enemies/EnemyUI.tscn" id="3_w0nka"]
+[ext_resource type="PackedScene" uid="uid://c8gf6u18rr6b2" path="res://scenes/game_states/battle/ComboUI/ComboUI.tscn" id="4_xrlob"]
+[ext_resource type="Texture2D" uid="uid://c0m3ipuk0h5t3" path="res://assets/HGSS_Lance_Back.png" id="5_07kx2"]
+
+[sub_resource type="Animation" id="Animation_wkqip"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_guomm"]
+resource_name = "move_player_left"
+length = 2.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.7, 2.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-615, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"combat_start"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1n1gv"]
+_data = {
+"RESET": SubResource("Animation_wkqip"),
+"move_player_left": SubResource("Animation_guomm")
+}
+
+[node name="battle_scene" type="Node2D"]
+script = ExtResource("1_2dsg1")
+
+[node name="UI" type="Node" parent="."]
+
+[node name="OptionsPanel" parent="UI" instance=ExtResource("2_30f2y")]
+
+[node name="EnemyUI" parent="UI" instance=ExtResource("3_w0nka")]
+
+[node name="ComboUI" parent="UI" instance=ExtResource("4_xrlob")]
+visible = false
+
+[node name="RythmRings" type="Node2D" parent="."]
+position = Vector2(244, 245)
+
+[node name="Enemies" type="Node2D" parent="."]
+position = Vector2(883, 268)
+
+[node name="Player" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture_filter = 1
+position = Vector2(269, 424)
+scale = Vector2(5.75625, 5.75625)
+texture = ExtResource("5_07kx2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+libraries = {
+"": SubResource("AnimationLibrary_1n1gv")
+}
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="EnemyShaderBlinkTimer" type="Timer" parent="Timers"]
+wait_time = 0.055
+
+[node name="WonFightDelay" type="Timer" parent="Timers"]
+wait_time = 0.6
+
+[connection signal="button_pressed" from="UI/OptionsPanel" to="." method="_on_ui_button_pressed"]
+[connection signal="timeout" from="Timers/EnemyShaderBlinkTimer" to="." method="_on_enemy_shader_blink_timer_timeout"]
+[connection signal="timeout" from="Timers/WonFightDelay" to="." method="_on_won_fight_delay_timeout"]
+
+[editable path="UI/OptionsPanel"]

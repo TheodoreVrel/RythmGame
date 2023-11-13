@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6ha404xnof6l"]
+
+[ext_resource type="Script" path="res://scenes/game_states/battle/rythm_rings/Stretto/stretto_rythm_indicator.gd" id="1_81hpa"]
+[ext_resource type="PackedScene" uid="uid://dtm5pk0ugsp1a" path="res://scenes/game_states/battle/rythm_rings/Parent/rythm_indicator.tscn" id="1_tyls5"]
+
+[node name="stretto_rythm_indicator" instance=ExtResource("1_tyls5")]
+script = ExtResource("1_81hpa")

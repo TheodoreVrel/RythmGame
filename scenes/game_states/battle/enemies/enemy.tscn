@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://0c4fhdb3557r"]
+
+[ext_resource type="Script" path="res://scenes/game_states/battle/enemies/enemy.gd" id="1_y58ff"]
+[ext_resource type="Texture2D" uid="uid://b0yb16ux83ndo" path="res://assets/108.295.png" id="2_4tfyt"]
+[ext_resource type="Shader" path="res://scenes/game_states/battle/enemies/enemy.gdshader" id="2_140c6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_clwls"]
+resource_name = "enemy_shader"
+shader = ExtResource("2_140c6")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/progress = 0.0
+
+[node name="enemy" type="Node2D"]
+script = ExtResource("1_y58ff")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_clwls")
+texture = ExtResource("2_4tfyt")
